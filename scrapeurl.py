@@ -129,14 +129,20 @@ class DesktopApp(QMainWindow):
             except Exception as e:
                 self.text_browser.setPlainText(f"Error loading image: {str(e)}")
 
-        self.text_browser.setHtml(f"<h2>{title}</h2>")
+        # self.text_browser.setHtml(f"<h2>{title}</h2>")
         for paragraph in paragraphs:
-            self.text_browser.insertPlainText(paragraph)
+            # self.text_browser.insertPlainText(paragraph)
+            self.text_browser.insertHtml(f'<h2>{paragraph}</h2>')
             self.text_browser.insertPlainText("\n\n")
         self.text_browser.insertPlainText(f'Updated on = {last_updated_date["$date"][0:10]}')
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
+    style = """
+        QWidget {
+        backgrount = blue;
+        }
+"""
     window = DesktopApp()
     window.show()
     sys.exit(app.exec())
