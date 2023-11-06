@@ -1,7 +1,7 @@
 import sys
 import requests
 from PyQt5.QtWidgets import (
-    QApplication, QMainWindow, QVBoxLayout, QPushButton, QTextEdit,
+    QApplication, QMainWindow, QVBoxLayout, QPushButton, QTextEdit, QLineEdit,
     QLabel, QTextBrowser, QWidget, QScrollArea, QGridLayout, QMessageBox
 )
 from PyQt5.QtGui import QPixmap
@@ -30,7 +30,8 @@ class DesktopApp(QMainWindow):
         main_layout.addWidget(url_label)
 
         # Create a text input field for the URL
-        self.url_input = QTextEdit()
+        # self.url_input = QTextEdit()
+        self.url_input = QLineEdit()
         main_layout.addWidget(self.url_input)
 
         # Create a button to scrape data
@@ -62,7 +63,8 @@ class DesktopApp(QMainWindow):
         central_widget.setLayout(main_layout)
 
     def scrape_data(self):
-        url = self.url_input.toPlainText()
+        # url = self.url_input.toPlainText() # for QTextEdit()
+        url = self.url_input.text() # for QLineEdit()
         if not url:
             self.text_browser.setPlainText("Please enter a URL to scrape.")
             return
@@ -83,7 +85,8 @@ class DesktopApp(QMainWindow):
             self.text_browser.setPlainText(f"Error: {str(e)}")
 
     def fetch_and_display_data(self):
-        url = self.url_input.toPlainText()
+        # url = self.url_input.toPlainText()
+        url = self.url_input.text()
         if not url:
             self.text_browser.setPlainText("Please enter a URL to fetch data.")
             return
@@ -113,15 +116,19 @@ class DesktopApp(QMainWindow):
         col = 0
         for img_url in images:
             try:
-                # Load the image using QPixmap
+            # Load the image using QPixmap
                 pixmap = QPixmap()
                 pixmap.loadFromData(requests.get(img_url).content)
                 if not pixmap.isNull():
                     image_label = QLabel()
                     image_label.setPixmap(pixmap)
+
+                    #CSS style to set the width and height
+                    #image_label.setStyleSheet("QLabel { width: 150px; height: 150px; }")
+                    image_label.setFixedSize(150, 150)
                     self.image_layout.addWidget(image_label, row, col)
                     col += 1
-                    if col > 2:  # Set the number of columns in the grid
+                    if col > 5:
                         col = 0
                         row += 1
                 else:
@@ -132,7 +139,10 @@ class DesktopApp(QMainWindow):
         # self.text_browser.setHtml(f"<h2>{title}</h2>")
         for paragraph in paragraphs:
             # self.text_browser.insertPlainText(paragraph)
-            self.text_browser.insertHtml(f'<h2>{paragraph}</h2>')
+            self.text_browser.insertHtml(f'<p>{paragraph}</p>')
+
+            self.text_browser.setStyleSheet("QTextBrowser { padding: 10px; font-size:21px; font-weight:medium;}")
+
             self.text_browser.insertPlainText("\n\n")
         self.text_browser.insertPlainText(f'Updated on = {last_updated_date["$date"][0:10]}')
 
@@ -141,6 +151,10 @@ if __name__ == '__main__':
     style = """
         QWidget {
         backgrount = blue;
+        }
+
+        QPixmap {
+            width: 150px; height: 150px;
         }
 """
     window = DesktopApp()
