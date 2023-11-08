@@ -1,0 +1,138 @@
+import sys
+import requests
+from PyQt5.QtWidgets import (
+    QApplication, QMainWindow, QVBoxLayout, QPushButton, QLineEdit,
+    QLabel, QTextBrowser, QWidget, QScrollArea, QGridLayout, QMessageBox
+)
+from PyQt5.QtGui import QPixmap
+
+class DesktopApp(QMainWindow):
+    def __init__(self):
+        super().__init__()
+
+        self.initUI()
+        self.previous_data = None
+
+    def initUI(self):
+        self.setWindowTitle('Desktop App')
+        self.setGeometry(100, 100, 800, 600)  # X-coordinate Y-coordinate Width Height
+
+        central_widget = QWidget()
+        self.setCentralWidget(central_widget)
+
+        main_layout = QVBoxLayout()
+
+        url_label = QLabel('Enter URL:')
+        main_layout.addWidget(url_label)
+
+        self.url_input = QLineEdit()
+        main_layout.addWidget(self.url_input)
+
+        scrape_button = QPushButton('Scrape Data')
+        scrape_button.clicked.connect(self.scrape_data)
+        main_layout.addWidget(scrape_button)
+
+        fetch_button = QPushButton('Fetch and Display Data')
+        fetch_button.clicked.connect(self.fetch_and_display_data)
+        main_layout.addWidget(fetch_button)
+
+        self.scroll_area = QScrollArea()
+        self.scroll_area.setWidgetResizable(True)
+        main_layout.addWidget(self.scroll_area)
+
+        self.image_widget = QWidget()
+        self.scroll_area.setWidget(self.image_widget)
+        self.image_layout = QGridLayout()
+        self.image_widget.setLayout(self.image_layout)
+
+        self.text_browser = QTextBrowser()
+        main_layout.addWidget(self.text_browser)
+
+        central_widget.setLayout(main_layout)
+
+    def scrape_data(self):
+        self.clear_previous_data()
+
+        url = self.url_input.text()
+        if not url:
+            self.text_browser.setPlainText("Please enter a URL to scrape.")
+            return
+
+        try:
+            response = requests.post('http://127.0.0.1:5000/scrape', json={"url": url})
+            if response.status_code == 200:
+                self.text_browser.setPlainText(response.json().get('message', 'No message available'))
+                message = response.json().get('message', 'No message available')
+                QMessageBox.information(self, 'Success', message)
+                self.previous_data = response.json()
+            else:
+                self.text_browser.setPlainText("Scraping failed. Please check the URL.")
+        except Exception as e:
+            self.text_browser.setPlainText(f"Error: {str(e)}")
+
+    def clear_previous_data(self):
+        self.text_browser.clear()
+
+        for i in reversed(range(self.image_layout.count())): #using reversed(range(self.image_layout.count())), you create a reversed sequence of numbers that corresponds to the positions of widgets in the layout.
+            widget = self.image_layout.itemAt(i).widget() #itemAt(i).widget() will get the widget that is at index i in the layout
+            if widget is not None:
+                widget.deleteLater() #deleteLater() => deletes/remove the reference of the widget from the memory.
+
+    def fetch_and_display_data(self):
+        url = self.url_input.text()
+        if not url:
+            self.text_browser.setPlainText("Please enter a URL to fetch data.")
+            return
+
+        try:
+            response = requests.post('http://127.0.0.1:5000/mydata', json={"url": url})
+            if response.status_code == 200:
+                data = response.json()
+                if data is None:
+                    self.text_browser.setPlainText("Data not found. Please check the URL.")
+                else:
+                    self.text_browser.clear()
+                    self.display_data(data)
+            else:
+                self.text_browser.setPlainText("Data retrieval failed. Please check the URL.")
+        except Exception as e:
+            self.text_browser.setPlainText(f"Error: {str(e)}")
+
+    def display_data(self, data):
+        title = data.get('title', 'No Title')
+        self.setWindowTitle(title)
+        images = data.get('images', [])
+        paragraphs = data.get('paragraphs', [])
+        last_updated_date = data.get('last_updated_date')
+
+        row = 0
+        col = 0
+        for img_url in images:
+            try:
+                pixmap = QPixmap()
+                pixmap.loadFromData(requests.get(img_url).content)
+                if not pixmap.isNull():
+                    image_label = QLabel()
+                    image_label.setPixmap(pixmap)
+                    image_label.setFixedSize(150, 150)
+                    self.image_layout.addWidget(image_label, row, col)
+                    col += 1
+                    if col > 5:
+                        col = 0
+                        row += 1
+                else:
+                    self.text_browser.setPlainText(f"Error loading image: {img_url}")
+            except Exception as e:
+                self.text_browser.setPlainText(f"Error loading image: {str(e)}")
+
+        for paragraph in paragraphs:
+            self.text_browser.insertHtml(f'<p>{paragraph}</p>')
+            self.text_browser.setStyleSheet("QTextBrowser { padding: 10px; font-size:21px; font-weight:medium; }")
+            self.text_browser.insertPlainText("\n\n")
+        self.text_browser.insertPlainText(f'Updated on = {last_updated_date["$date"][0:10]}')
+
+if __name__ == '__main__':
+    app = QApplication(sys.argv)
+    window = DesktopApp()
+    window.show()
+    sys.exit(app.exec())
