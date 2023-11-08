@@ -1,11 +1,11 @@
 import sys
 import requests
 from PyQt5.QtWidgets import (
-    QApplication, QMainWindow, QVBoxLayout, QPushButton, QTextEdit, QLineEdit,
+    QApplication, QMainWindow, QVBoxLayout, QPushButton, QLineEdit,
     QLabel, QTextBrowser, QWidget, QScrollArea, QGridLayout, QMessageBox
 )
 from PyQt5.QtGui import QPixmap
-from PyQt5.QtCore import Qt
+# from PyQt5.QtCore import Qt
 
 class DesktopApp(QMainWindow):
     def __init__(self):
@@ -16,46 +16,46 @@ class DesktopApp(QMainWindow):
 
     def initUI(self):
         self.setWindowTitle('Desktop App')
-        self.setGeometry(100, 100, 800, 600)
+        self.setGeometry(100, 100, 800, 600) # X-coordinate Y-coordinate Width Height
 
-        # Create a central widget
+        # central widget
         central_widget = QWidget()
         self.setCentralWidget(central_widget)
 
-        # Create the main layout
+        # main layout
         main_layout = QVBoxLayout()
 
-        # Create a label for the URL input
+        # label
         url_label = QLabel('Enter URL:')
         main_layout.addWidget(url_label)
 
-        # Create a text input field for the URL
+        # text input field 
         # self.url_input = QTextEdit()
         self.url_input = QLineEdit()
         main_layout.addWidget(self.url_input)
 
-        # Create a button to scrape data
+        # button 
         scrape_button = QPushButton('Scrape Data')
         scrape_button.clicked.connect(self.scrape_data)
         main_layout.addWidget(scrape_button)
 
-        # Create a button to fetch and display data
+        # button to fetch and display data
         fetch_button = QPushButton('Fetch and Display Data')
         fetch_button.clicked.connect(self.fetch_and_display_data)
         main_layout.addWidget(fetch_button)
 
-        # Create a scroll area for images
+        # Scroll area for images
         self.scroll_area = QScrollArea()
         self.scroll_area.setWidgetResizable(True)
         main_layout.addWidget(self.scroll_area)
 
-        # Create a widget to contain the images
+        # widget for images
         self.image_widget = QWidget()
         self.scroll_area.setWidget(self.image_widget)
         self.image_layout = QGridLayout()  # Use a grid layout for images
         self.image_widget.setLayout(self.image_layout)
 
-        # Create a text browser to display data
+        # text browser to display data
         self.text_browser = QTextBrowser()
         main_layout.addWidget(self.text_browser)
 
