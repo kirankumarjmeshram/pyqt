@@ -1,0 +1,5 @@
+Dialogs:
+With PyQt, you can develop two types of GUI desktop applications. Depending on the class that you use to create the main form or window, you’ll have one of the following:
+
+A main window–style application: The application’s main window inherits from QMainWindow.
+A dialog-style application: The application’s main window inherits from QDialog.
