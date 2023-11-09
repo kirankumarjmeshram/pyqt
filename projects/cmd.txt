@@ -1,0 +1,63 @@
+Serial Number:
+    wmic bios get serialnumber
+
+Mac Address:
+    wmic nic get macaddress
+    getmac
+
+CPU:
+    wmic cpu
+    wmic cpu get caption, name, deviceid, numberofcores, maxclockspeed, status
+
+RAM:
+    wmic computersystem get totalphysicalmemory
+
+PARTITION:
+    wmic partition get name,size,type
+
+PROCESS:
+    wmic process list
+    wmic process where name="name_of_file" call terminate
+    eg. wmic process where name="Calculator.exe" call terminate
+
+PRODUCR:
+    wmic product
+    wmic product get name,version
+
+Basic Volume Details:
+    vol volume_letter: 
+
+Window’s Version:
+    winver
+
+Check Disk:
+    chkdsk
+
+System Information:
+    Host Name
+    OS Name
+    OS Version
+    OS Manufacturer
+    OS Configuration
+    Os Build Type
+    Registered Owner
+    Product ID
+    Original Install Date
+    Bios Version
+    Processor
+    Input Locale
+    Time Zone
+
+systeminfo
+
+Disk Details:
+    diskpart =>'disk part' will get us to an infinite loop.
+    list disk =>'list disk' will give us the status and the size of the hard disk partition
+    select disk_name => Enter our disk name instead of 'disk_name' and our disk will be selected
+    detail disk => This will give us option which we can use to manipulate our disk
+    exit => This will finally help us to exit the infinite loop
+
+
+
+
+
