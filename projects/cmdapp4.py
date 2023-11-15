@@ -43,7 +43,9 @@ class CommandApp(QWidget):
             self.process.readyReadStandardOutput.connect(self.read_output)
             # error
             self.process.readyReadStandardError.connect(self.read_error)
+            # start the process with  command
             self.process.start(command)
+            # create a file name with the command and the current date and time
             file_name = f"{command.replace(' ', '_')}_{datetime.now().strftime('%Y-%m-%d_%H-%M-%S')}.txt"
             # open the file in append mode
             self.file = open(os.path.join(folder_path, file_name), "a")
@@ -51,6 +53,7 @@ class CommandApp(QWidget):
     def read_output(self):
         # read the standard output from the process
         output = self.process.readAllStandardOutput().data().decode()
+        # append the output to the text box and the file
         self.output_box.append(output)
         self.file.write(output)
         # flush the file to write the data immediately
@@ -59,6 +62,7 @@ class CommandApp(QWidget):
     def read_error(self):
         # read the standard error from the process
         error = self.process.readAllStandardError().data().decode()
+        # append the error to the text box and the file
         self.output_box.append(error)
         self.file.write(error)
         # flush the file to write the data immediately
