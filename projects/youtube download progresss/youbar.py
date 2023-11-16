@@ -1,4 +1,6 @@
 import sys
+import os
+from datetime import datetime
 import urllib.request
 from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QLineEdit, QPushButton, QVBoxLayout, QProgressBar
 from PyQt5.QtCore import QThread, pyqtSignal
@@ -57,8 +59,8 @@ class YouTubeDownloaderApp(QWidget):
         vbox = QVBoxLayout()
         vbox.addWidget(self.url_label)
         vbox.addWidget(self.url_input)
-        vbox.addWidget(self.download_button)
         vbox.addWidget(self.progress_bar)
+        vbox.addWidget(self.download_button)
         vbox.addStretch()
 
         self.setLayout(vbox)
@@ -69,7 +71,15 @@ class YouTubeDownloaderApp(QWidget):
             return
 
         url = self.url_input.text()
-        save_path = 'downloaded_video.mp4'
+
+        url = self.url_input.text()
+        save_folder = 'videos'
+        # unique name to file
+        timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
+        save_path = f'downloaded_video_{timestamp}.mp4'
+        os.makedirs(save_folder, exist_ok=True)  # Create the folder if it doesn't exist
+        save_path = os.path.join(save_folder, save_path)
+
 
         self.download_thread = DownloadThread(url, save_path)
         self.download_thread.progress_signal.connect(self.update_progress)

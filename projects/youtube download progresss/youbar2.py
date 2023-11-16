@@ -51,7 +51,7 @@ class YouTubeDownloaderApp(QWidget):
 
     def initUI(self):
         self.setWindowTitle('YouTube Downloader')
-        self.setGeometry(300, 300, 800, 600)
+        self.setGeometry(500, 200, 600, 500)
 
         self.url_label = QLabel('Enter YouTube Video URL:')
         self.url_input = QLineEdit()
