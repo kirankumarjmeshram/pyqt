@@ -1,0 +1,27 @@
+
+
+        # self.setGeometry(100, 100, 400, 400)
+        # self.setWindowTitle("String Printer")
+
+        # self.textbox = QTextEdit(self)
+        # self.textbox.setGeometry(50, 50, 300, 200)
+
+        # self.number_label = QLabel("Number:", self)
+        # self.number_label.setGeometry(50, 260, 100, 30)
+
+        # self.text_label = QLabel("Text:", self)
+        # self.text_label.setGeometry(250, 260, 100, 30)
+
+        # self.start_button = QPushButton("Start", self)
+        # self.start_button.setGeometry(50, 300, 100, 50)
+        # self.start_button.clicked.connect(self.start_printing)
+
+        # self.stop_button = QPushButton("Stop", self)
+        # self.stop_button.setGeometry(250, 300, 100, 50)
+        # self.stop_button.clicked.connect(self.stop_printing)
+
+        # self.number_input = QLineEdit(self)
+        # self.number_input.setGeometry(110, 260, 100, 30)
+
+        # self.text_input = QLineEdit(self)
+        # self.text_input.setGeometry(300, 260, 100, 30)
