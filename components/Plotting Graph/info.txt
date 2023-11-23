@@ -1,0 +1,50 @@
+
+
+self.plot_graph.setBackground("w") # gackground color
+
+    There are a number of colors available using single letters, as we did in the example above. 
+    They're based on the standard colors used in Matplotlib. Here are the most common codes:
+    Letter Code	Color
+    "b"	Blue
+    "c"	Cian
+    "d"	Grey
+    "g"	Green
+    "k"	Black
+    "m"	Magenta
+    "r"	Red
+    "w"	White
+    "y"	Yellow
+
+also 
+    self.plot_graph.setBackground("#bbccaa")  # Hex
+    self.plot_graph.setBackground((100, 50, 255))  # RGB each 0-255
+    self.plot_graph.setBackground((100, 50, 255, 25))  # RGBA (A = alpha opacity)
+
+We can also specify colors using Qt's QColor class if we prefer it:
+
+    from PyQt5 import QtGui
+    # ...
+
+    self.plot_graph.setBackground(QtGui.QColor(100, 50, 254, 25))
+
+Symbol
+In addition to the + plot marker, PyQtGraph supports the markers shown in the table below:
+
+    Character	Marker Shape
+    "o"	        Circle
+    "s"	        Square
+    "t"	        Triangle
+    "d"	        Diamond
+    "+"	        Plus
+    "t1"	    Triangle pointing upwards
+    "t2"	    Triangle pointing right side
+    "t3"	    Triangle pointing left side
+    "p"	        Pentagon
+    "h"	        Hexagon
+    "star"	    Star
+    "x"	        Cross
+    "arrow_up"	    Arrow Up
+    "arrow_right"	Arrow Right
+    "arrow_down"	Arrow Down
+    "arrow_left"	Arrow Left
+    "crosshair"	    Crosshair
