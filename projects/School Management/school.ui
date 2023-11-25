@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>991</width>
+    <width>993</width>
     <height>722</height>
    </rect>
   </property>
@@ -55,7 +55,7 @@
      <string notr="true">background-color: rgb(96, 152, 255);</string>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -82,12 +82,12 @@
        <string>Administrator Login</string>
       </property>
      </widget>
-     <widget class="QLabel" name="label_2">
+     <widget class="QLabel" name="l01">
       <property name="geometry">
        <rect>
         <x>260</x>
         <y>80</y>
-        <width>471</width>
+        <width>661</width>
         <height>51</height>
        </rect>
       </property>
@@ -144,7 +144,7 @@
        <string>Password</string>
       </property>
      </widget>
-     <widget class="QLineEdit" name="lineEdit">
+     <widget class="QLineEdit" name="tb01">
       <property name="geometry">
        <rect>
         <x>430</x>
@@ -162,7 +162,7 @@
        <string notr="true">background-color: rgb(255, 255, 255);</string>
       </property>
      </widget>
-     <widget class="QLineEdit" name="lineEdit_2">
+     <widget class="QLineEdit" name="tb02">
       <property name="geometry">
        <rect>
         <x>430</x>
@@ -183,7 +183,7 @@
        <enum>QLineEdit::Password</enum>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButton">
+     <widget class="QPushButton" name="b01">
       <property name="geometry">
        <rect>
         <x>440</x>
@@ -3417,7 +3417,7 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>991</width>
+     <width>993</width>
      <height>30</height>
     </rect>
    </property>
