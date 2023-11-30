@@ -19,10 +19,14 @@ class DownloadThread(QThread):
     def run(self):
         try:
             playlist = Playlist(self.playlist_url)
-            total_videos = len(playlist.video_urls)
+            videos = playlist.video_urls
+            total_videos = len(videos)
             downloaded_videos = 0
 
-            for video_url in playlist.video_urls:
+            total_bytes_all = 0
+            downloaded_bytes_all = 0
+
+            for video_url in videos:
                 yt = YouTube(video_url)
                 video = yt.streams.filter(file_extension="mp4", progressive=True, resolution=self.resolution).first()
 
@@ -30,21 +34,24 @@ class DownloadThread(QThread):
                 
                 with urllib.request.urlopen(video.url) as response:
                     total_bytes = int(response.info()['Content-Length'])
+                    total_bytes_all += total_bytes
                     downloaded_bytes = 0
                     chunk_size = 1024  # 1 KB
                     while True:
                         chunk = response.read(chunk_size)
                         if not chunk:
                             break
+                        downloaded_bytes_all += len(chunk)
                         downloaded_bytes += len(chunk)
                         progress_single = int((downloaded_bytes / total_bytes) * 100)
+                        progress_all = int((downloaded_bytes_all / total_bytes_all) * 100)
                         self.single_progress_signal.emit(progress_single)
+                        self.total_progress_signal.emit(progress_all, downloaded_videos)
 
                         with open(save_path, 'ab') as file:
                             file.write(chunk)
 
                 downloaded_videos += 1
-                self.total_progress_signal.emit(downloaded_videos * 100 // total_videos, downloaded_videos)
 
         except Exception as e:
             print(f"Error: {e}")
@@ -103,11 +110,6 @@ class YouTubeDownloaderApp(QWidget):
 
         os.makedirs(save_folder, exist_ok=True)  # Create the folder if it doesn't exist
 
-        playlist = Playlist(playlist_url)
-        total_videos = len(playlist.video_urls)
-
-        self.label_total_videos.setText(f"Downloaded: 0 / Total: {total_videos}")
-
         self.download_thread = DownloadThread(playlist_url, resolution, save_folder)
         self.download_thread.single_progress_signal.connect(self.update_single_progress)
         self.download_thread.total_progress_signal.connect(self.update_total_progress)
@@ -118,7 +120,7 @@ class YouTubeDownloaderApp(QWidget):
 
     def update_total_progress(self, progress, downloaded_videos):
         self.progress_total_bar.setValue(progress)
-        self.label_total_videos.setText(f"Downloaded: {downloaded_videos} / Total: {self.label_total_videos.text().split('/')[-1]}")
+        self.label_total_videos.setText(f"Downloaded: {downloaded_videos} / Total: Calculating...")
 
     def closeEvent(self, event):
         # Ensure that the thread is stopped before the application exits
