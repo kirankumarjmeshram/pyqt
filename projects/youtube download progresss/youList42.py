@@ -12,6 +12,7 @@ class DownloadThread(QThread):
     def __init__(self, playlist_url, resolution, base_save_folder):
         super().__init__()
         self.playlist_url = playlist_url
+        # getting resolution resolution_combo picklist
         self.resolution = resolution
         self.base_save_folder = base_save_folder
         self.total_downloaded_bytes = 0
@@ -51,7 +52,7 @@ class DownloadThread(QThread):
                             self.total_downloaded_bytes += len(chunk)
                             progress = int((downloaded_bytes / video.filesize) * 100)
 
-                            # Recalculate total progress using the total bytes of all videos in the playlist
+                            # progress all videos 
                             total_progress = int((self.total_downloaded_bytes / self.total_bytes) * 100)
 
                             self.progress_signal.emit(progress, yt.title)
@@ -64,7 +65,7 @@ class YouTubeDownloaderApp(QWidget):
     def __init__(self):
         super().__init__()
 
-        self.download_thread = None  # Initialize the thread as a member variable
+        self.download_thread = None  
 
         self.initUI()
 
@@ -112,7 +113,7 @@ class YouTubeDownloaderApp(QWidget):
         resolution = self.resolution_combo.currentText()
         base_save_folder = 'playlist_videos'
 
-        os.makedirs(base_save_folder, exist_ok=True)  # Create the base folder if it doesn't exist
+        os.makedirs(base_save_folder, exist_ok=True)  
 
         self.download_thread = DownloadThread(playlist_url, resolution, base_save_folder)
         self.download_thread.progress_signal.connect(self.update_progress)
