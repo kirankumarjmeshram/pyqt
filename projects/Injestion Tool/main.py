@@ -1,5 +1,8 @@
 from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QLabel, QTextEdit, QStackedWidget, QLineEdit, QGroupBox, QFileDialog, QMessageBox
 from pymongo import MongoClient
+import os
+from dotenv import load_dotenv
+
 class IngestionTool(QWidget):
     def __init__(self):
         super().__init__()
@@ -257,24 +260,30 @@ class IngestionTool(QWidget):
     #     collection.insert_one(data)
     def add_to_database(self):
         try:
-            client = MongoClient('mongodb://localhost:27017/')  # Connect to your MongoDB client
-            db = client['your_database']  # Select your database
-            collection = db['your_collection']  # Select your collection
+            load_dotenv()
+            MONGO_URI = os.getenv('URI')
+            if MONGO_URI is None:
+                raise ValueError("MONGO_URI environment variable is not set.")
+            client = MongoClient(MONGO_URI)  
+            db = client['configdb'] 
+            collection = db['STATUS']  
 
             data = {
                 'case_id': self.case_id_input.text(),
                 'owner_id': self.owner_id_input.text(),
-                'input_path': self.input_path_input.text()
+                'input_path': self.input_path_input.text(),
+                'backup_path': "/home/$user/GARUDA/"
             }
 
-            collection.insert_one(data)  # Insert the data into the collection
+            collection.insert_one(data)  
         except Exception as e:
             error_dialog = QMessageBox()
+            # print(str(e))
             error_dialog.setWindowTitle("Error")
             error_dialog.setText(f"An error occurred: {str(e)}")
             error_dialog.exec_()
 
-    # Define the individual functions for each button
+    # functions for each button
     def file_parser_pid(self):
         self.text_area.setText("Clicked on FILE PARSER's PID button")
 
