@@ -276,6 +276,10 @@ class IngestionTool(QWidget):
             }
 
             collection.insert_one(data)  
+            success_msg = QMessageBox()
+            success_msg.setWindowTitle("Success")
+            success_msg.setText("data added successfully !")
+            success_msg.exec_()
         except Exception as e:
             error_dialog = QMessageBox()
             # print(str(e))
