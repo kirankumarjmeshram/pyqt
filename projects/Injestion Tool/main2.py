@@ -9,6 +9,7 @@ class IngestionTool(QWidget):
 
         self.initUI()
         self.setGeometry(300, 300, 800, 600)  
+        self.setWindowTitle("Ingection Tool")
 
     def initUI(self):
         layout = QVBoxLayout()
