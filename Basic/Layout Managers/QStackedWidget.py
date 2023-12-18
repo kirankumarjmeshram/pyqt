@@ -23,7 +23,7 @@ class stackedExample(QWidget):
         self.Stack.addWidget(self.stack2)
         self.Stack.addWidget(self.stack3)
 
-        hbox = QHBoxLayout(self)
+        hbox = QHBoxLayout(self) 
         hbox.addWidget(self.leftlist)
         hbox.addWidget(self.Stack)
 
