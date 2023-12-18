@@ -319,10 +319,13 @@ class IngestionTool(QWidget):
         MONGO_URI = os.getenv('URI')
         client = MongoClient(MONGO_URI) 
         db = client['configdb'] 
-        collection = db['configs_paths'] 
+        collection = db['STATUS'] 
 
         data = {
-            'input_path': self.input_path_input.text()
+            'case_id': self.case_id_input.text(),
+            'owner_id': self.owner_id_input.text(),
+            'input_path': self.input_path_input.text(),
+            'backup_path': "/home/$user/GARUDA/"
         }
 
         collection.insert_one(data) 
@@ -335,7 +338,7 @@ class IngestionTool(QWidget):
         msg.exec_()
 
 
-    # Define the individual functions for each button
+    # Individual functions for each button
     def file_parser_pid(self):
         self.text_area.setText("Clicked on FILE PARSER's PID button")
 
