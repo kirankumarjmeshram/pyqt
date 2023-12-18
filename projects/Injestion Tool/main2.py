@@ -211,8 +211,7 @@ class IngestionTool(QWidget):
     def open_settings(self):
         self.settings_window = QMainWindow()
         self.settings_window.setWindowTitle("Settings")
-        self.settings_window.setGeometry(0, -100, 600, 400)
-        self.settings_window.move(QDesktopWidget().availableGeometry().center() - self.settings_window.frameGeometry().center())
+        self.settings_window.setGeometry(500, 500, 600, 400)
 
         central_widget = QWidget(self.settings_window)
         layout = QVBoxLayout(central_widget)
@@ -264,8 +263,7 @@ class IngestionTool(QWidget):
     def open_config(self):
         self.config_window = QMainWindow()
         self.config_window.setWindowTitle("Config")
-        self.config_window.setGeometry(-100, -200, 600, 400)
-        self.config_window.move(QDesktopWidget().availableGeometry().center() - self.config_window.frameGeometry().center())
+        self.config_window.setGeometry(600, 600, 600, 400)
 
         central_widget = QWidget(self.config_window)  # Create a central widget
         layout = QVBoxLayout(central_widget)
@@ -273,6 +271,7 @@ class IngestionTool(QWidget):
 
         # Create the input fields
         case_owner_layout = QHBoxLayout()
+
         case_id_label = QLabel("CASE ID")
         case_owner_layout.addWidget(case_id_label)
         self.case_id_input = QLineEdit()
@@ -284,7 +283,7 @@ class IngestionTool(QWidget):
         case_owner_layout.addWidget(self.owner_id_input)
         layout.addLayout(case_owner_layout)
 
-        # Create a group box
+        #  group box
         group_box = QGroupBox()
         group_layout = QVBoxLayout()
 
@@ -314,7 +313,6 @@ class IngestionTool(QWidget):
         self.input_path_input.setText(folder_path)
 
     def add_to_database(self):
-        # Your existing code for adding to the database
         load_dotenv()
         MONGO_URI = os.getenv('URI')
         client = MongoClient(MONGO_URI) 
