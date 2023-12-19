@@ -188,7 +188,9 @@ class ConfigPage(QWidget):
                 "input_folder": input_folder,
                 "preprocessing_status": "success",
                 "duck_name": duck_name,
-                "duck_path": backup_folder
+                "duck_path": backup_folder,
+                'owner_id': self.owner_id_input.text(),
+                'case_id': self.case_id_input.text(),
             }
             status_collection.insert_one(update_data)
 
