@@ -1,0 +1,6 @@
+{
+    "default_mongo_port": "127.0.0.1",
+    "default_mongo_ip": "27017",
+    "default_database_name": "GARUDA",
+    "default_backup_path": "/home/$user/GARUDA/"
+}
