@@ -192,7 +192,11 @@ class ConfigPage(QWidget):
                 "duck_name": duck_name,
                 "duck_path": backup_folder,
                 'owner_id': self.owner_id_input.text(),
+<<<<<<< HEAD
                 'input_path': self.input_path_input.text()
+=======
+                'case_id': self.case_id_input.text(),
+>>>>>>> bef5f1eed2bb8caeab04c8da3e12fa3fe593e0b8
             }
             status_collection.insert_one(update_data)
 
