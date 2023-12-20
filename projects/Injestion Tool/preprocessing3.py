@@ -177,5 +177,5 @@ def main(input_folder, backup_folder, mongo_uri, mongo_db):
 if __name__ == "__main__":
     main(input_folder=input_folder, backup_folder=backup_folder, mongo_uri=mongo_uri, mongo_db=mongo_db)
     
-# python preprocessing.py --input_folder "C:\Users\Redmi\Documents\GitHub\pyqt\projects" --backup_folder "C:\Users\Redmi\Documents\GitHub\pyqt\projects\Injestion Tool\backup"
+# python3 preprocessing.py --input_folder "C:\Users\Redmi\Documents\GitHub\pyqt\projects" --backup_folder "C:\Users\Redmi\Documents\GitHub\pyqt\projects\Injestion Tool\backup"
 

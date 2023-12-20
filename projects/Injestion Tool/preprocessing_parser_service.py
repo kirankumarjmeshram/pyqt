@@ -58,10 +58,16 @@ def globbing(input_folder, backup_folder,file_log_collection,status_collection):
     duck_name = input_path_hash+'_'+duck_name
 
     extracted_data_list = []
+    print("globbing started 0")
 
     for _f in glob.iglob(
+        
         os.path.join(input_folder, os.path.join("**", "*.*")), recursive=True,
     ):
+    # for _f in glob.iglob(
+    #     os.path.join(input_folder, "**", "*.*"), recursive=True
+    # ):
+        print("ffffffffffffffff +> 1",_f)
         if ".triage" in _f:
             continue
 
@@ -74,7 +80,7 @@ def globbing(input_folder, backup_folder,file_log_collection,status_collection):
                 file_time = file_stat.st_mtime
 
             if extension in EXTENSIONS_ORDER:
-
+                print(" extension => 3")
                 extracted_data = {
                 "file_id": f"file.{__id}",
                 "source": _f,
@@ -99,6 +105,7 @@ def globbing(input_folder, backup_folder,file_log_collection,status_collection):
             
             extracted_data_list.append(extracted_data)
     if len(extracted_data_list) > 0:
+        print("globbing => save to mongo db 10")
         save_to_mongodb(extracted_data_list,file_log_collection)
     
         pipeline = [
@@ -180,21 +187,41 @@ def validate_folder(ctx, param, value):
 @click.option('--mongo_db', default='GARUDA', help='MongoDB Database Name')
 
 def main(input_folder, backup_folder,mongo_uri,mongo_db):
-    mongo_client = MongoClient(mongo_uri)
-    garuda_db = mongo_client[mongo_db]
-    file_log_collection = garuda_db['file_log']
-    status_collection = garuda_db['status']
+    try:
+        mongo_client = MongoClient(mongo_uri)
+        garuda_db = mongo_client[mongo_db]
+        file_log_collection = garuda_db['file_log']
+        status_collection = garuda_db['status']
 
-    existing_document = status_collection.find_one({"input_folder": input_folder})
+        existing_document = status_collection.find_one({"input_folder": input_folder})
 
-    if existing_document:
-        logger.info(f"Folder '{input_folder}' already exists in the collection.")
-    else:
-        logger.info("Starting the script for input folder: {}", input_folder)
-        console.log("Globbing is started for ", input_folder)
-        globbing(input_folder, backup_folder,file_log_collection,status_collection)
+        if existing_document:
+            logger.info(f"Folder '{input_folder}' already exists in the collection.")
+                
+        else:
+            logger.info("Starting the script for input folder: {}", input_folder)
+            globbing(input_folder, backup_folder, file_log_collection, status_collection)
+    except Exception as e:
+        logger.error(f"Error: {e}")
+           
+            
+    # mongo_client = MongoClient(mongo_uri)
+    # garuda_db = mongo_client[mongo_db]
+    # file_log_collection = garuda_db['file_log']
+    # status_collection = garuda_db['status']
+
+    # existing_document = status_collection.find_one({"input_folder": input_folder})
+
+    # if existing_document:
+    #     logger.info(f"Folder '{input_folder}' already exists in the collection.")
+    # else:
+    #     logger.info("Starting the script for input folder: {}", input_folder)
+    #     console.log("Globbing is started for ", input_folder)
+    #     globbing(input_folder, backup_folder,file_log_collection,status_collection)
         
 
 
 if __name__ == "__main__":
     main()
+
+# python3 preprocessing_parser_service.py --input_folder "/home/sarutobi/Documents/pyqt/pyqt/projects/Injestion Tool" --backup_folder "/home/sarutobi/Documents/pyqt/pyqt/projects/Injestion Tool/backup"

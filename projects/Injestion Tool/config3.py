@@ -61,8 +61,10 @@ class ConfigPage(QWidget):
         self.input_path_input.setText(folder_path)
 
     def main(self):  # Added this method
-        input_folder = self.input_path_input.text().replace("/", "\\\\")
-        backup_folder = "C:\\Users\\Redmi\\Documents\\GitHub\\pyqt\\projects\\Injestion Tool\\backup"
+        # input_folder = self.input_path_input.text().replace("/", "\\\\") #FOR WINDOW
+        input_folder = self.input_path_input.text() #FOR LINUX
+        # backup_folder = "C:\\Users\\Redmi\\Documents\\GitHub\\pyqt\\projects\\Injestion Tool\\backup" #FOR WINDOW
+        backup_folder = "/home/$user/GARUDA/" #FOR LINUX
         mongo_uri = "mongodb://localhost:27017/"
         mongo_db = "GARUDA"
 
@@ -188,7 +190,9 @@ class ConfigPage(QWidget):
                 "input_folder": input_folder,
                 "preprocessing_status": "success",
                 "duck_name": duck_name,
-                "duck_path": backup_folder
+                "duck_path": backup_folder,
+                'owner_id': self.owner_id_input.text(),
+                'input_path': self.input_path_input.text()
             }
             status_collection.insert_one(update_data)
 
@@ -218,6 +222,14 @@ class ConfigPage(QWidget):
                 logger.info("Starting the script for input folder: {}", input_folder)
                 console.log("Globbing is started for ", input_folder)
                 globbing(input_folder, backup_folder, file_log_collection, status_collection)
+
+                # Done message
+                msg = QMessageBox()
+                msg.setIcon(QMessageBox.Information)
+                msg.setText("data added to the collection successfully")
+                msg.setWindowTitle("MESSAGE")
+                msg.exec_()
+
 
 
         main(input_folder, backup_folder, mongo_uri, mongo_db)
