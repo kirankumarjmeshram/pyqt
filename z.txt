@@ -1,4 +1,8 @@
-
+        Setting Allignments
+                self.clicksLabel = QLabel("Counting: 0 clicks", self)
+                # self.clicksLabel.setAlignment(Qt.AlignHCenter | Qt.AlignVCenter)
+                self.stepLabel = QLabel("Long-Running Step: 0")
+                # self.stepLabel.setAlignment(Qt.AlignHCenter | Qt.AlignVCenter)
 
         # self.setGeometry(100, 100, 400, 400)
         # self.setWindowTitle("String Printer")

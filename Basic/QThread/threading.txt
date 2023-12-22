@@ -1,0 +1,19 @@
+Use PyQt's QThread to Prevent Freezing GUIs :=> https://realpython.com/python-pyqt-qthread/
+An Intro to Threading in Python : -> https://realpython.com/intro-to-python-threading/
+    in single_thread.py :
+        When you click the Click me! button, the label shows the number of clicks. However, 
+        if you click the Long-Running Task! button, then the application becomes frozen and unresponsive. 
+        The buttons no longer respond to clicks and the labels don’t reflect the application’s state.
+
+        After five seconds, the application’s GUI gets updated again. The Counting label shows ten clicks,
+        reflecting five clicks that occurred while the GUI was frozen. The Long-Running Step label doesn’t 
+        reflect the progress of your long-running operation. It jumps from zero to five without showing 
+        the intermediate steps.
+
+        The application’s GUI freezes as a result of a blocked main thread. The main thread is busy processing 
+        a long-running task and doesn’t immediately respond to the user’s actions. This is an annoying behavior 
+        because the user doesn’t know for sure if the application is working correctly or if it’s crashed.
+        
+        Fortunately, there are some techniques you can use to work around this issue. 
+        A commonly used solution is to run your long-running task outside of the application’s main thread 
+        using a worker thread.

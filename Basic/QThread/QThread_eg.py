@@ -5,6 +5,7 @@ import time
 
 
 class Worker(QObject):
+    # WORKER'S SIGNALS (progress and completed)
     progress = Signal(int)
     completed = Signal(int)
 

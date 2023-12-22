@@ -58,7 +58,7 @@ def globbing(input_folder, backup_folder,file_log_collection,status_collection):
     duck_name = input_path_hash+'_'+duck_name
 
     extracted_data_list = []
-    print("globbing started 0")
+    # print("globbing started 0")
 
     for _f in glob.iglob(
         
@@ -67,7 +67,7 @@ def globbing(input_folder, backup_folder,file_log_collection,status_collection):
     # for _f in glob.iglob(
     #     os.path.join(input_folder, "**", "*.*"), recursive=True
     # ):
-        print("ffffffffffffffff +> 1",_f)
+        # print("ffffffffffffffff +> 1",_f)
         if ".triage" in _f:
             continue
 
@@ -105,7 +105,7 @@ def globbing(input_folder, backup_folder,file_log_collection,status_collection):
             
             extracted_data_list.append(extracted_data)
     if len(extracted_data_list) > 0:
-        print("globbing => save to mongo db 10")
+        # print("globbing => save to mongo db 10")
         save_to_mongodb(extracted_data_list,file_log_collection)
     
         pipeline = [
