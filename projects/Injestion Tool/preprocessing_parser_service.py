@@ -193,6 +193,7 @@ def main(input_folder, backup_folder,mongo_uri,mongo_db):
         file_log_collection = garuda_db['file_log']
         status_collection = garuda_db['status']
 
+# update find_all for !preprocess 
         existing_document = status_collection.find_one({"input_folder": input_folder})
 
         if existing_document:

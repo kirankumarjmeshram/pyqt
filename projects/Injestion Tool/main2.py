@@ -314,7 +314,8 @@ class IngestionTool(QWidget):
 
     def add_to_database(self):
         load_dotenv()
-        MONGO_URI = os.getenv('URI')
+        # MONGO_URI = os.getenv('URI')
+        MONGO_URI = "mongodb://localhost:27017/"
         client = MongoClient(MONGO_URI) 
         db = client['configdb'] 
         collection = db['STATUS'] 

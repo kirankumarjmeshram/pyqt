@@ -59,7 +59,6 @@ class ConfigPage(QWidget):
         self.input_path_input.setText(folder_path)
 
     def add_button_clicked(self):
-        # Add data to status collection with preprocessing_status = pending
         self.update_status_collection("pending")
 
     def update_status_collection(self, preprocessing_status):

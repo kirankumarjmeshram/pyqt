@@ -168,7 +168,6 @@ def main_logic(input_folder):
     )
     logger.info("Preprocessing completed successfully for input folder: {}", input_folder)
 
-# ... (other code)
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:
