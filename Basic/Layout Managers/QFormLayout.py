@@ -4,7 +4,7 @@
 
 import sys
 
-from PyQt6.QtWidgets import (
+from PyQt5.QtWidgets import (
     QApplication,
     QFormLayout,
     QLineEdit,
